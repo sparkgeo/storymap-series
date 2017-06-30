@@ -9,8 +9,8 @@ define(["dojo/topic"],
         var container = app.map.container; // the current map div
         var maptiksMapOptions = {
           extent: app.map.extent,
-          maptiks_trackcode: "c311cf16-ad79-42b1-97f9-f433be6c8b00",
-          maptiks_id: "test:" + app.data.getCurrentEntry().title // from Builder Maptiks settings, ID:tabname
+          maptiks_trackcode: demo ? "c311cf16-ad79-42b1-97f9-f433be6c8b00" : app.data.getWebAppData().getMaptiks().maptiksTrackcode,
+          maptiks_id: demo ? "test:" + app.data.getCurrentEntry().title : app.data.getWebAppData().getMaptiks().maptiksId + ":" + app.data.getCurrentEntry().title  // from Builder Maptiks settings, ID:tabname
         };
         
         if (!app.map.maptiks) {
