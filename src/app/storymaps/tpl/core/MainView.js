@@ -1,5 +1,6 @@
 define([
     "lib-build/css!./MainView",
+    "./Maptiks",
     "../ui/MainStage",
     "./Config",
     "./Data",
@@ -39,6 +40,7 @@ define([
   ],
   function (
     viewCss,
+    Maptiks,
     MainStage,
     Config,
     Data,
@@ -78,27 +80,6 @@ define([
       this.init = function(core)
       {
         _core = core;
-
-        // *******************************************
-        // **** Maptiks Changes below
-        // *******************************************
-
-        // After a map is loaded (when the map starts to render)
-        topic.subscribe("story-loaded-map", function(){
-          require(['maptiks'], function (mapWrapper) {
-            var container = $(app.map.container); // the current map div
-            var maptiksMapOptions = {
-              extent: app.map.extent,
-              maptiks_trackcode: app.data.getWebAppData().getMaptiks().maptiksTrackcode, // from Builder Maptiks settings
-              maptiks_id: app.data.getWebAppData().getMaptiks().maptiksId + ":" + app.data.getCurrentEntry().title // from Builder Maptiks settings, ID:tabname
-            };
-            mapWrapper(container, maptiksMapOptions, app.map);
-          });
-        });
-
-        // *******************************************
-        // **** Maptiks Changes done
-        // *******************************************
 
         //----------------------------------------------
         // Development - TODO to be removed for release
@@ -286,7 +267,6 @@ define([
 
         // Tab navigation event from tab bar and side accordion
         topic.subscribe("story-tab-navigation", onTabNavigation);
-
         return true;
       };
 
