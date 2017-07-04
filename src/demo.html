@@ -41,7 +41,6 @@
 
                   win.app.map.maptiks.off("maptiks:track");
                   win.app.map.maptiks.on("maptiks:track", function (e) {
-                    console.log(e); // prints maptiks parameters
                     var position = e.hasOwnProperty("position") ? [e.position[1], e.position[0]] : [e.map_center[1], e.map_center[0]];
 
                     var marker = L.marker(position).addTo(Lmap);
