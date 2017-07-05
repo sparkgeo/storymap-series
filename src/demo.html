@@ -29,8 +29,15 @@
             require(["dojo/topic"],
               function(topic){
                 var win = iframe.contentWindow || iframe;
-                win.dojo.subscribe("maptiks-ready", function(){
-                  var Lmap = L.map("maptiks-map");
+                var Lmap = L.map("maptiks-map");
+              
+                win.dojo.subscribe("demo-ready", function(mapWrapper){
+                  var container = win.app.map.container; // the current map div
+                  var maptiksMapOptions = {
+                    maptiks_trackcode: "c311cf16-ad79-42b1-97f9-f433be6c8b00", // dummy account
+                    maptiks_id: "demo:" + win.app.data.getCurrentEntry().title
+                  };
+                  mapWrapper(container, maptiksMapOptions, win.app.map);
 
                   var esriExtent = win.app.map.geographicExtent;
                   var leafletExtent = L.latLngBounds([L.latLng(esriExtent.ymin, esriExtent.xmin),L.latLng(esriExtent.ymax, esriExtent.xmax)]);
