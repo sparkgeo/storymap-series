@@ -16,7 +16,7 @@ define(["dojo/topic"],
             curMap.maptiks['_id'] = id;
           }
         }
-        topic.publish('demo-ready',mapWrapper,response);
+        topic.publish('maptiks-ready',mapWrapper,response);
       });
     });
   }

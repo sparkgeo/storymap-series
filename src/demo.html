@@ -31,7 +31,7 @@
                 var win = iframe.contentWindow || iframe;
                 var Lmap = L.map("maptiks-map");
               
-                win.dojo.subscribe("demo-ready", function(mapWrapper,response){
+                win.dojo.subscribe("maptiks-ready", function(mapWrapper,response){
                   
                   curMap = win.app.maps[response.id].response.map;
                   var id = "seriesDemo:" + win.app.data.getStoryEntries()[response.index].title; // from Builder Maptiks settings, ID:tabname
