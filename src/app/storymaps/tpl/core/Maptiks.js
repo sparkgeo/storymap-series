@@ -1,18 +1,22 @@
 define(["dojo/topic"],
   function(topic){
-    topic.subscribe("story-loaded-map", function(){
-      require(["maptiks"], function (mapWrapper) {
-        if (!app.map.maptiks) { // maptiks are not yet tracking this map
-          if (app.data.getWebAppData().getMaptiks().maptiksTrackcode) { // maptiks have been set in builder
-            var container = app.map.container; // the current map div
+    require(["maptiks"], function (mapWrapper) {
+      topic.subscribe("story-loaded-map", function(response){
+        curMap = app.maps[response.id].response.map;
+        if (app.data.getWebAppData().getMaptiks().maptiksTrackcode) { // maptiks have been set in builder
+          var id = app.data.getWebAppData().getMaptiks().maptiksId + ":" + app.data.getStoryEntries()[response.index].title; // from Builder Maptiks settings, ID:tabname
+          if (!curMap.maptiks) {
+            var container = curMap.container; // the current map div
             var maptiksMapOptions = {
               maptiks_trackcode: app.data.getWebAppData().getMaptiks().maptiksTrackcode, // from Builder Maptiks settings
-              maptiks_id: app.data.getWebAppData().getMaptiks().maptiksId + ":" + app.data.getCurrentEntry().title // from Builder Maptiks settings, ID:tabname
+              maptiks_id: id
             };
-            mapWrapper(container, maptiksMapOptions, app.map);
+            mapWrapper(container, maptiksMapOptions, curMap);
+          } else {
+            curMap.maptiks['_id'] = id;
           }
-          topic.publish("demo-ready", mapWrapper);
         }
+        topic.publish('demo-ready',mapWrapper,response);
       });
     });
   }
