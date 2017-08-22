@@ -2,7 +2,7 @@ define(["dojo/topic"],
   function(topic){
     require(["maptiks"], function (mapWrapper) {
       topic.subscribe("story-loaded-map", function(response){
-        curMap = app.maps[response.id].response.map;
+        var curMap = app.maps[response.id].response.map;
         if (app.data.getWebAppData().getMaptiks().maptiksTrackcode) { // maptiks have been set in builder
           var id = app.data.getWebAppData().getMaptiks().maptiksId + ":" + app.data.getStoryEntries()[response.index].title; // from Builder Maptiks settings, ID:tabname
           if (!curMap.maptiks) {
@@ -13,7 +13,7 @@ define(["dojo/topic"],
             };
             mapWrapper(container, maptiksMapOptions, curMap);
           } else {
-            curMap.maptiks['_id'] = id;
+            curMap.maptiks._id = id;
           }
         }
         topic.publish('maptiks-ready',mapWrapper,response);
